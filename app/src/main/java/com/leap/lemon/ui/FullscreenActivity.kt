@@ -40,13 +40,15 @@ class FullscreenActivity : SimpleActivity() {
             FirebaseEventUtil.event("lemon_first")
         }
 
+        isSplash = App.getInstance().activityCount < 2
+
         if (isSplash) {
             FirebaseEventUtil.event("lemon_cold")
+            FirebaseEventUtil.userProperty(UserConfig.country)
         } else {
             FirebaseEventUtil.event("lemon_hot")
         }
 
-        FirebaseEventUtil.userProperty(UserConfig.country)
 
         binding.progressBar.progress = 0
         progressNum = 1

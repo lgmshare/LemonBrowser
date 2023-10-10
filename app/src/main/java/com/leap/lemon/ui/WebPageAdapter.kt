@@ -9,8 +9,8 @@ import com.leap.idea.R
 import com.leap.idea.databinding.ItemWebPageBinding
 import com.leap.lemon.App
 import com.leap.lemon.exts.dp2px
-import com.leap.lemon.exts.getScreenWidth
 import com.leap.lemon.models.WebTab
+import com.leap.lemon.utils.ScreenUtils
 
 class WebPageAdapter(
     private val context: Context,
@@ -24,7 +24,7 @@ class WebPageAdapter(
     private var itemHeight: Int = 0
 
     init {
-        itemWidth = (context.getScreenWidth() - App.getInstance().dp2px(44f)) / 2
+        itemWidth = (ScreenUtils.getScreenWidth(context) - App.getInstance().dp2px(44f)) / 2
         itemHeight = (itemWidth * 1.3).toInt()
     }
 

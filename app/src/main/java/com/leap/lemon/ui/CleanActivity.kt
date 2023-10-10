@@ -25,7 +25,7 @@ class CleanActivity : SimpleActivity() {
 
         job = lifecycleScope.launch {
             kotlin.runCatching {
-                withTimeoutOrNull(10000) {
+                withTimeoutOrNull(8000) {
                     launch {
                         CookieManager.getInstance().removeAllCookies {
                         }
@@ -33,8 +33,8 @@ class CleanActivity : SimpleActivity() {
                     }
 
                     launch {
-                        delay(2000)
-                        toast("")
+                        delay(3000)
+                        toast("Clean successfully")
                         FirebaseEventUtil.cleanEvent(3)
                     }
                     launch {

@@ -16,9 +16,11 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.GridLayoutManager
+import com.leap.idea.BuildConfig
 import com.leap.idea.R
 import com.leap.idea.databinding.ActivityMainBinding
 import com.leap.idea.databinding.MainContentBinding
+import com.leap.lemon.App
 import com.leap.lemon.LEMON_DEFAULT_LINK
 import com.leap.lemon.WebPagesManager
 import com.leap.lemon.exts.toast
@@ -64,17 +66,30 @@ class MainActivity : SimpleActivity() {
 
         val navHeaderView = binding.drawerNavView.inflateHeaderView(R.layout.main_navigation)
         navHeaderView.findViewById<View>(R.id.item_new).setOnClickListener {
+            FirebaseEventUtil.newTabEvent("setting")
+            WebPagesManager.addNewWeb()
             binding.drawerLayout.closeDrawer(GravityCompat.START)
         }
         navHeaderView.findViewById<View>(R.id.item_share).setOnClickListener {
             FirebaseEventUtil.event("lemon_share")
             binding.drawerLayout.closeDrawer(GravityCompat.START)
-            LemonUtils.jumpShare(this@MainActivity, "")
+            val path = if (WebPagesManager.currentWebTab.webView.isIdle || WebPagesManager.currentWebTab.webView.isStopped) {
+                "https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}"
+            } else {
+                WebPagesManager.currentWebTab.webView.url ?: ""
+            }
+            LemonUtils.jumpShare(this@MainActivity, path)
         }
         navHeaderView.findViewById<View>(R.id.item_copy).setOnClickListener {
             FirebaseEventUtil.event("lemon_copy")
             binding.drawerLayout.closeDrawer(GravityCompat.START)
-            LemonUtils.copyToClipboard(this@MainActivity, "")
+            val path = if (WebPagesManager.currentWebTab.webView.isIdle || WebPagesManager.currentWebTab.webView.isStopped) {
+                ""
+            } else {
+                WebPagesManager.currentWebTab.webView.url ?: ""
+            }
+            LemonUtils.copyToClipboard(this@MainActivity, path)
+            toast("Copy successfully")
         }
         navHeaderView.findViewById<View>(R.id.item_rate).setOnClickListener {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
@@ -225,7 +240,9 @@ class MainActivity : SimpleActivity() {
 
     override fun onStart() {
         super.onStart()
-        FirebaseEventUtil.event("lemon_show")
+        if (App.getInstance().runningForeground) {
+            FirebaseEventUtil.event("lemon_show")
+        }
     }
 
     override fun onBackPressed() {
@@ -282,7 +299,7 @@ class MainActivity : SimpleActivity() {
     }
 
     private fun startLoad(url: String) {
-        FirebaseEventUtil.event("rose_newSearch")
+        FirebaseEventUtil.event("lemon_newSearch")
         WebPagesManager.startLoad(url)
     }
 

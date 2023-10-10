@@ -21,7 +21,7 @@ import com.leap.lemon.utils.FirebaseEventUtil
 class MyWebView @JvmOverloads constructor(context: Context = App.getInstance(), attributeSet: AttributeSet? = null) : WebView(context, attributeSet) {
 
     enum class WebState {
-        IDEA, LOADING, FINISH, STOPPED
+        IDLE, LOADING, FINISH, STOPPED
     }
 
     init {
@@ -45,11 +45,11 @@ class MyWebView @JvmOverloads constructor(context: Context = App.getInstance(), 
         webViewClient = MyWebClient()
     }
 
-    private var loadState: WebState = WebState.IDEA
+    private var loadState: WebState = WebState.IDLE
 
-    val isIdea: Boolean
+    val isIdle: Boolean
         get() {
-            return loadState == WebState.IDEA
+            return loadState == WebState.IDLE
         }
 
     val isStopped: Boolean

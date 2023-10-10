@@ -61,4 +61,4 @@
 #实体类单独配置
 # ==================gson end=====================
 
--keep class com.welcome.browser.model.** {*;}
+#-keep class com.leap.lemon.models.** {*;}

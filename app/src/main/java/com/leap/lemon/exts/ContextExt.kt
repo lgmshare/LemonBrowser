@@ -1,12 +1,8 @@
 package com.leap.lemon.exts
 
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
-import android.content.Intent
 import android.widget.Toast
 import androidx.annotation.StringRes
-import com.leap.idea.R
 
 
 fun Context.toast(msg: String?) {
@@ -33,18 +29,4 @@ fun Context.dp2px(dp: Float): Int {
 fun Context.px2dp(px: Float): Int {
     val scale = resources.displayMetrics.density
     return (px / scale + 0.5f).toInt()
-}
-
-/**
- * 获取屏幕宽度
- */
-fun Context.getScreenWidth(): Int {
-    return resources.displayMetrics.widthPixels
-}
-
-/**
- * 获取屏幕高度
- */
-fun Context.getScreenHeight(): Int {
-    return resources.displayMetrics.heightPixels
 }
