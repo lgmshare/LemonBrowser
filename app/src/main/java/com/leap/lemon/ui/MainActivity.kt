@@ -149,6 +149,7 @@ class MainActivity : SimpleActivity() {
 
             btnDelete.setOnClickListener {
                 bindingContent.searchView.setText("")
+                stopLoad()
             }
 
             btnBackward.setOnClickListener {
